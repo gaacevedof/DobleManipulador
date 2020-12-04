@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<launch>
+    
+    <!-- Robot 1 Spawn -->
+    <group ns="robot1">
+        <param name="tf_prefix" value="robot1_tf" />
+        <include file="$(find phantom_x_pincher)/launch/single_phantom.launch">
+            <arg name="robot_name" value="phantom_Robot1"/>
+            <arg name="x" value="0.1"/>
+	        <arg name="y" value="0"/>
+	        <arg name="z" value="0"/>
+            <arg name="Y" value="1.57"/>
+        </include>
+    </group>
+
+    <!-- Robot 2 Spawn -->
+    <group ns="robot2">
+        <param name="tf_prefix" value="robot2_tf" />
+        <include file="$(find phantom_x_pincher)/launch/single_phantom.launch">
+            <arg name="robot_name" value="phantom_Robot2"/>
+            <arg name="x" value="-0.1"/>
+	        <arg name="y" value="0"/>
+	        <arg name="z" value="0"/>
+            <arg name="Y" value="1.57"/>
+        </include>
+    </group>-->
+
+    <!-- Gazebo Initialization -->
+	<include file="$(find gazebo_ros)/launch/empty_world.launch">
+		<arg name="use_sim_time" value="true"/>
+	</include> 
+
+    <!-- rqt publisher -->
+	<node name="rqt_publisher" pkg="rqt_publisher" type="rqt_publisher" />
+
+</launch>

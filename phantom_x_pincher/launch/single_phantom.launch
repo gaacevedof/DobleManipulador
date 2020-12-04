@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!-- Robot Model -->
+    <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find phantom_x_pincher)/urdf/description_meshed.urdf.xacro'" />
+	
+    <arg name="robot_name" default="robot1"/>
+    <arg name="x" default="0"/>
+	<arg name="y" default="0"/>
+	<arg name="z" default="0"/>
+    <arg name="Y" default="0"/>
+    
+    <!-- Spawn Robot Model -->
+	<node name="spawnphantom" 
+		pkg="gazebo_ros" 
+		type="spawn_model" 
+		output="screen"
+		args="-urdf -param robot_description
+		-model $(arg robot_name) -x $(arg x) -y $(arg y) -z $(arg z) -Y $(arg Y)" />
+
+    <!-- Load controllers -->
+    <rosparam command="load" file="$(find phantom_x_pincher)/config/joints.yaml"/>
+        
+	<!-- Controllers -->
+	<node name="controller_spawner" pkg="controller_manager" type="spawner"
+		respawn="false" output="screen" 
+		args=" 
+		joint_state_controller
+		joint1_position_controller
+		joint2_position_controller
+		joint3_position_controller
+		joint4_position_controller
+		gripper_position_controller
+		--timeout 60">
+	</node>
+
+	<!-- State Publisher -->
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+
+	
+
+	<!-- Gazebo Initialization 
+	<include file="$(find gazebo_ros)/launch/empty_world.launch">
+		<arg name="use_sim_time" value="true"/>
+	</include> -->
+
+
+</launch>

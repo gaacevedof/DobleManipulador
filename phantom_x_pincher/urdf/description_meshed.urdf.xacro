@@ -1,0 +1,248 @@
+<?xml version="1.0"?>
+<robot name="Phantom_X_Pincher" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:include filename="$(find phantom_x_pincher)/macros/phantom_macros.xacro" />
+    <xacro:include filename="$(find phantom_x_pincher)/macros/mesh_macros.xacro" />
+    <xacro:include filename="$(find phantom_x_pincher)/macros/parameters.xacro" />
+    
+    <material name="color">
+        <color rgba="0.0 1.0 1.0 1.0"/>
+    </material>
+
+    <!--Base link from Gazebo-->
+    <link name="world"/>  
+
+    <!--
+
+    <joint name="fixed" type="fixed">  <!Joint to fix the base so it does not move
+        <parent link="world"/>
+        <child link="${link_00}"/>
+    </joint>
+    
+
+    <!Eslabon base del robot
+    <link name="${link_00}">
+        
+    </link>
+    -->
+    <joint name="base_joint" type="fixed">
+        <parent link="world"/>
+        <child link="${link_00}"/>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+    </joint>
+    
+    <!--Base del robot-->
+    <xacro:link_with_mesh 
+    name= "${link_00}"
+    origin_xyz= "0.0 0.0 0.0"
+    origin_rpy= "0.0 0.0 0.0"
+    origin_inertia_xyz="-0.02697 0.000098 0.043868"
+    collision_xyz="0.0 0.0 0.0175" 
+    collision_rpy="0.0 0.0 0.0" 
+    radius="0.025" 
+    length="0.035"
+    meshfile="package://phantom_x_pincher/meshes/PincherBase.dae"
+    mass="0.132"
+    ixx="0.0002539" ixy="0.0" ixz="-0.0000519"
+    iyy="0.0002913" iyz="-0.0"
+    izz="0.0002766"	
+    color="color"
+    />
+    
+    <xacro:joint_R 
+    name = "${joint_01}"
+    type = "revolute"
+    origin_xyz = "0 0 0.094"
+    origin_rpy = "0 0 0.0"
+    parent = "${link_00}"
+    child = "${link_01}"
+    axis = "0 0 1"
+    limit_l = "-3.14"
+    limit_u = "3.14"
+    limit_e ="10.0"
+    limit_v = "0.5"
+    />
+
+    <!--Primer eslabon-->
+    <xacro:link_with_mesh 
+    name= "${link_01}"
+    origin_xyz= "0.0 0.0 0.0"
+    origin_rpy= "0.0 0.0 0.0"
+    origin_inertia_xyz="0.000032 0.001031 0.027694"
+    collision_xyz="0.0 0.0 0.021" 
+    collision_rpy="0.0 0.0 0.0" 
+    radius="0.0185" 
+    length="0.042"
+    meshfile="package://phantom_x_pincher/meshes/PincherLink1.dae"
+    mass="0.046"
+    ixx="0.0000143" ixy="-0.0" ixz="0.0"
+    iyy="0.0000121" iyz="-0.0000002"
+    izz="0.0000075"	
+    color="color"
+    />
+    
+    <xacro:joint_R 
+    name = "${joint_02}"
+    type = "revolute"
+    origin_xyz = "0 0 0.042"
+    origin_rpy = "1.57 0 0"
+    parent = "${link_01}"
+    child = "${link_02}"
+    axis = "0 0 1"
+    limit_l = "-3.14"
+    limit_u = "3.14"
+    limit_e ="10.0"
+    limit_v = "0.5"
+    />
+
+    <!--Segundo Eslabón-->
+    <xacro:link_with_mesh
+    name= "${link_02}"
+    origin_xyz= "0.0 0.0 0.0"
+    origin_rpy= "1.57 0.0 3.14"
+    origin_inertia_xyz="0.000023 0.000748 0.080988"
+    collision_xyz="0.0 0.0535 0.0" 
+    collision_rpy="1.57 0.0 0.0" 
+    radius="0.023" 
+    length="0.107"
+    meshfile="package://phantom_x_pincher/meshes/PincherLink2.dae"
+    mass="0.064"
+    ixx="0.0000488" ixy="-0.0" ixz="0.0"
+    iyy="0.00004381" iyz="-0.0000007"
+    izz="0.0000123"	
+    color="color"
+    />
+    
+    <!--Tercer Eslabón-->
+    <xacro:joint_R 
+    name = "${joint_03}"
+    type = "revolute"
+    origin_xyz = "0 0.107 0.0"
+    origin_rpy = "0.0 0.0 1.57"
+    parent = "${link_02}"
+    child = "${link_03}"
+    axis = "0 0 1"
+    limit_l = "-3.14"
+    limit_u = "3.14"
+    limit_e ="10.0"
+    limit_v = "0.5"
+    />
+
+    <xacro:link_with_mesh
+    name= "${link_03}"
+    origin_xyz= "0.0 0.0 0.0"
+    origin_rpy= "1.57 0.0 1.57"
+    origin_inertia_xyz="0.000023 0.000748 0.080988"
+    collision_xyz="0.0 0.0535 0.0" 
+    collision_rpy="0.0 1.57 0.0" 
+    radius="0.023" 
+    length="0.107"
+    meshfile="package://phantom_x_pincher/meshes/PincherLink3.dae"
+    mass="0.064"
+    ixx="0.0000488" ixy="-0.0" ixz="0.0"
+    iyy="0.00004381" iyz="-0.0000007"
+    izz="0.0000123"	
+    color="color"
+    />
+
+    <xacro:joint_R 
+    name = "${joint_04}"
+    type = "revolute"
+    origin_xyz = "0.107 0.0 0.0"
+    origin_rpy = "0.0 0.0 -1.57"
+    parent = "${link_03}"
+    child = "${link_04}"
+    axis = "0 0 1"
+    limit_l = "-0.35"
+    limit_u = "3.4"
+    limit_e ="10.0"
+    limit_v = "0.5"
+    />
+
+    <!--Eslabón de la Herramienta-->
+    <xacro:link_with_mesh
+    name= "${link_04}"
+    origin_xyz= "0.0 0.0 0.0"
+    origin_rpy= "-1.57 0.0 -1.57"
+    origin_inertia_xyz="-0.009712 0.000023 0.047049"
+    collision_xyz="0.037 0.0 0.0" 
+    collision_rpy="1.57 0.0 1.57" 
+    radius="0.023" 
+    length="0.070"
+    meshfile="package://phantom_x_pincher/meshes/PincherTool.dae"
+    mass="0.063"
+    ixx="0.0000226" ixy="0.0" ixz="0.0000009"
+    iyy="0.0000270" iyz="-0.0"
+    izz="0.0000211"	
+    color="color"
+    />
+
+    <!--Gripper-->
+    <xacro:joint_R 
+    name = "${gripper_01}"
+    type = "prismatic"
+    origin_xyz = "0.0714 0.0 0.0"
+    origin_rpy = "0.0 0.0 0.0"
+    parent = "${link_04}"
+    child = "${finger_01}"
+    axis = "0 0 1"
+    limit_l = "-0.012"
+    limit_u = "0.014"
+    limit_e ="10.0"
+    limit_v = "0.5"
+    />
+    <xacro:finger_with_mesh
+    name= "${finger_01}"
+    origin_xyz= "0.0 0.0 -0.028"
+    origin_rpy= "1.57 0.0 1.57"
+    origin_inertia_xyz="0.011269 0.0 -0.021814"
+    meshfile="package://phantom_x_pincher/meshes/PincheFinger.dae"
+    mass="0.007"
+    ixx="0.0000011" ixy="0" ixz="0"
+    iyy="0.0000018" iyz="-0.0000003"
+    izz="0.0000012"	
+    color="color"
+    />
+
+    <xacro:joint_R 
+    name = "${gripper_02}"
+    type = "prismatic"
+    origin_xyz = "0.0714 0.0 0.0"
+    origin_rpy = "3.14 0.0 0.0"
+    parent = "${link_04}"
+    child = "${finger_02}"
+    axis = "0 0 1"
+    limit_l = "-0.012"
+    limit_u = "0.014"
+    limit_e ="10.0"
+    limit_v = "0.5"
+    />
+
+    <xacro:finger_with_mesh
+    name= "${finger_02}"
+    origin_xyz= "0.0 0.0 -0.028"
+    origin_rpy= "1.57 0.0 1.57"
+    origin_inertia_xyz="0.011269 0.0 -0.021814"
+    meshfile="package://phantom_x_pincher/meshes/PincheFinger.dae"
+    mass="0.007"
+    ixx="0.0000011" ixy="0" ixz="0"
+    iyy="0.0000018" iyz="-0.0000003"
+    izz="0.0000012"
+    color="color"
+    />
+    <xacro:create_noa
+    name="noa"
+    origin_rpy="1.57 0.0 1.57" 
+    origin_xyz ="0.109 0.0 0.0"
+    parent="${link_04}"
+    />
+    <!-- Gazebo ROS Plugin-->
+    <!-- Plugin para que Gazebo pueda entender los controladores-->
+    <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+      <legacyModeNS>true</legacyModeNS>
+    </plugin>
+  </gazebo>
+
+</robot>

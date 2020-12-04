@@ -1,0 +1,138 @@
+<?xml version="1.0"?>
+<robot name="PxP_description" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:include filename="$(find phantom_x_pincher)/macros/phantom_macros.xacro" />
+    
+    <material name="cyan">
+        <color rgba="0.0 1.0 1.0 1.0"/>
+    </material>
+
+    Base link from Gazebo
+    <link name="world"/>  
+
+    <joint name="fixed" type="fixed">  Joint to fix the base so it does not move
+        <parent link="world"/>
+        <child link="base_link"/>
+    </joint>
+    
+
+
+    <link name="base_link">
+        
+    </link>
+
+    <joint name="base_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="robot_base"/>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+    </joint>
+    
+    <xacro:link_robot 
+    name= "robot_base"
+    origin_xyz= "0.0 0.0 0.0175"
+    origin_rpy= "0.0 0.0 0.0"
+    radius= "0.025"
+    length= "0.035"
+    material="cyan"
+    />
+    
+    <xacro:joint_R 
+    name = "joint_1"
+    type = "revolute"
+    origin_xyz = "0 0 0.035"
+    origin_rpy = "0 0 0"
+    parent = "robot_base"
+    child = "link_1"
+    axis = "0 0 1"
+    limit_l = "-3.14"
+    limit_u = "3.14"
+    limit_e ="10.0"
+    limit_v = "0.5"
+    />
+
+    <xacro:link_robot 
+    name= "link_1"
+    origin_xyz= "0.0 0.0 0.021"
+    origin_rpy= "0.0 0.0 0.0"
+    radius= "0.0185"
+    length= "0.042"
+    material="cyan"
+    />
+    
+    <xacro:joint_R 
+    name = "joint_2"
+    type = "revolute"
+    origin_xyz = "0 0 0.042"
+    origin_rpy = "1.57 0 0"
+    parent = "link_1"
+    child = "link_2"
+    axis = "0 0 1"
+    limit_l = "-3.14"
+    limit_u = "3.14"
+    limit_e ="10.0"
+    limit_v = "0.5"
+    />
+
+    <xacro:link_robot 
+    name= "link_2"
+    origin_xyz= "0.0 0.0535 0.0"
+    origin_rpy= "1.57 0.0 0.0"
+    radius= "0.023"
+    length= "0.107"
+    material="cyan"
+    />
+    
+     <xacro:joint_R 
+    name = "joint_3"
+    type = "revolute"
+    origin_xyz = "0 0.107 0.0"
+    origin_rpy = "0.0 0.0 1.57"
+    parent = "link_2"
+    child = "link_3"
+    axis = "0 0 1"
+    limit_l = "-3.14"
+    limit_u = "3.14"
+    limit_e ="10.0"
+    limit_v = "0.5"
+    />
+
+    <xacro:link_robot 
+    name= "link_3"
+    origin_xyz= "0.0535 0.0 0.0"
+    origin_rpy= "0.0 1.57 0.0"
+    radius= "0.023"
+    length= "0.107"
+    material="cyan"
+    />
+
+         <xacro:joint_R 
+    name = "joint_4"
+    type = "revolute"
+    origin_xyz = "0.107 0.0 0.0"
+    origin_rpy = "0.0 0.0 -1.57"
+    parent = "link_3"
+    child = "link_4"
+    axis = "0 0 1"
+    limit_l = "-3.14"
+    limit_u = "3.14"
+    limit_e ="10.0"
+    limit_v = "0.5"
+    />
+
+    <xacro:link_robot 
+    name= "link_4"
+    origin_xyz= "0.037 0.0 0.0"
+    origin_rpy= "1.57 0.0 1.57"
+    radius= "0.023"
+    length= "0.070"
+    material="cyan"
+    />
+    <!-- Gazebo ROS Plugin-->
+    <!-- Plugin para que Gazebo pueda entender los controladores-->
+    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotNamespace>/</robotNamespace>
+        </plugin>
+    </gazebo>
+
+</robot>
